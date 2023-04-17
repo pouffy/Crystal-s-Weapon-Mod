@@ -1,0 +1,45 @@
+{
+  "credit": "Made with Blockbench",
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "crystals_weapons:item/crystalline_scythe"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [73.87, -89.82, 102.86],
+      "translation": [0, 7, 0.75],
+      "scale": [2, 2, 1]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [54.98, 89.8, -78.07],
+      "translation": [0, 7, 1.5],
+      "scale": [2, 2, 1]
+    },
+    "firstperson_righthand": {
+      "rotation": [73.87, -89.82, 102.86],
+      "translation": [0, 7, 0.75],
+      "scale": [2, 2, 1]
+    },
+    "firstperson_lefthand": {
+      "rotation": [54.98, 89.8, -78.07],
+      "translation": [0, 7, 1.5],
+      "scale": [2, 2, 1]
+    },
+    "ground": {
+      "translation": [0, 4, 0]
+    }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "entity": {
+          "hand": "either",
+          "target_entity": {
+            "id": "minecraft:player"
+          }
+        }
+      },
+      "model": "crystals_weapons:item/crystalline_scythe_active"
+    }
+    ]
+}

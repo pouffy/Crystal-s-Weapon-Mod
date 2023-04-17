@@ -1,0 +1,11 @@
+{
+  "predicate": {
+    "entity": {
+      "hand": "either",
+      "target_entity": {
+        "id": "minecraft:player"
+      }
+    }
+  },
+  "model": "crystals_weapons:item/crystalline_scythe_active"
+}
