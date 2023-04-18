@@ -1,5 +1,6 @@
 package com.pouffy.crystals_weapons.common.tool;
 
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
@@ -7,7 +8,7 @@ import net.minecraft.util.Lazy;
 
 import java.util.function.Supplier;
 
-public enum ScytheMaterials implements ToolMaterial {
+public enum ModMaterials implements ToolMaterial {
     CRYSTALLINE(3, 2500, 6.0F, 9.0F, 15, () -> {
         return Ingredient.ofItems(Items.AMETHYST_SHARD);
     })
@@ -21,7 +22,7 @@ public enum ScytheMaterials implements ToolMaterial {
     private final int enchantability;
     private final Lazy<Ingredient> repairIngredient;
 
-    ScytheMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
+    ModMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
         this.miningLevel = miningLevel;
         this.itemDurability = itemDurability;
         this.miningSpeed = miningSpeed;
