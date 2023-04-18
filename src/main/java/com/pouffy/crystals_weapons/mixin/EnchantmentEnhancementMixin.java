@@ -14,7 +14,7 @@ public class EnchantmentEnhancementMixin {
     @Inject(method = "isAcceptableItem", at = @At("RETURN"), cancellable = true)
     private void getPossibleEntriesEnhanced(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
         boolean canBeEnchanted = false;
-        CrystalsWeapons.LOGGER.info("EnchantmentEnhancementMixin");
+
         if (stack.getItem() instanceof ScytheItem) {
             for (Enchantment enchantment : ScytheItem.ALLOWED_ENCHANTMENTS) {
                 if ((Object)this == enchantment) {
