@@ -1,0 +1,7 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "crystals_weapons:item/casters_cleaver",
+	"textures": {
+		"layer0": "crystals_weapons:item/casters_cleaver_cast"
+	}
+}
