@@ -1,6 +1,6 @@
 package com.pouffy.crystals_weapons.common.tool;
 
-import com.pouffy.crystals_weapons.common.item.ModItemSettings;
+import com.pouffy.crystals_weapons.common.item.CrystalsWeaponsItemSettings;
 import com.pouffy.crystals_weapons.common.tag.ModItemTags;
 import com.pouffy.crystals_weapons.registry.EnchantmentsRegistry;
 import net.minecraft.block.BlockState;
@@ -29,7 +29,7 @@ public class ScytheItem extends MiningToolItem {
     private static final Set<Material> EFFECTIVE_ON_MATERIAL = Set.of(Material.CACTUS, Material.COBWEB, Material.UNDERWATER_PLANT);
 
     public ScytheItem(ToolMaterial material) {
-        super(.5f, -1.8f, material, ModItemTags.REAPING_WORTHY, new ModItemSettings());
+        super(.5f, -1.8f, material, ModItemTags.REAPING_WORTHY, new CrystalsWeaponsItemSettings());
     }
     @Override
     public float getMiningSpeedMultiplier(ItemStack stack, BlockState state) {
@@ -51,6 +51,16 @@ public class ScytheItem extends MiningToolItem {
         stack.damage(1, attacker, user -> user.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND));
 
         return true;
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public int getEnchantability() {
+        return 22; // check ToolMaterials for reference
     }
 
     @Override
