@@ -4,6 +4,14 @@
 	"textures": {
 		"layer0": "crystals_weapons:item/casters_cleaver"
 	},
+	"overrides": [
+		{
+			"predicate": {
+				"cast": 1
+			},
+			"model": "crystals_weapons:item/casters_cleaver_cast"
+		}
+	],
 	"display": {
 		"thirdperson_righthand": {
 			"rotation": [65, -89.82, 102.86],

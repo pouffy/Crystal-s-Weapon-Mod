@@ -15,6 +15,8 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
 import net.minecraft.item.*;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
@@ -32,8 +34,8 @@ public class FishingRodSwordItem extends FishingRodItem {
         super(settings);
         this.attackDamage = 15;
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", (double)this.attackDamage, EntityAttributeModifier.Operation.ADDITION));
-        builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", (double)attackSpeed, EntityAttributeModifier.Operation.ADDITION));
+        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Weapon modifier", this.attackDamage, EntityAttributeModifier.Operation.ADDITION));
+        builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Weapon modifier", attackSpeed, EntityAttributeModifier.Operation.ADDITION));
         this.attributeModifiers = builder.build();
     }
 
@@ -48,18 +50,39 @@ public class FishingRodSwordItem extends FishingRodItem {
                 });
             }
 
-            world.playSound((PlayerEntity)null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_FISHING_BOBBER_RETRIEVE, SoundCategory.NEUTRAL, 1.0F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
+            world.playSound(null, user.getX(), user.getY(), user.getZ(),
+                    SoundEvents.ENTITY_FISHING_BOBBER_RETRIEVE, SoundCategory.NEUTRAL,
+                    1.0F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
         } else {
-            world.playSound((PlayerEntity)null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_FISHING_BOBBER_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
+            world.playSound(null, user.getX(), user.getY(), user.getZ(),
+                    SoundEvents.ENTITY_FISHING_BOBBER_THROW, SoundCategory.NEUTRAL,
+                    0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!world.isClient) {
                 i = EnchantmentHelper.getLure(itemStack);
                 int j = EnchantmentHelper.getLuckOfTheSea(itemStack);
                 Entity testEntity = new FishingBobberEntity(user, world, j, i);
+                itemStack.getOrCreateNbt().putUuid("bobberUUID", testEntity.getUuid());
                 world.spawnEntity(testEntity);
             }
         }
 
+        NbtCompound nbt = itemStack.getOrCreateNbt();
+        if (world instanceof ServerWorld serverWorld) {
+            if (serverWorld.getEntity(nbt.getUuid("bobberUUID")) != null) {
+                nbt.putFloat("cast", 1.0f);
+            } else {
+                nbt.putFloat("cast", 0.0f);
+            }
+        }
+
         return TypedActionResult.success(itemStack, world.isClient());
+    }
+
+    @Override
+    public ItemStack getDefaultStack() {
+        ItemStack itemStack = super.getDefaultStack();
+        itemStack.getOrCreateNbt().putFloat("cast", 0.0f);
+        return itemStack;
     }
 
     public int getEnchantability() {
